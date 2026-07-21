@@ -482,6 +482,9 @@ Por seguridad, no se incluye un token JWT completo en este README, ya que funcio
 ---
 
 # Evidencias de funcionamiento
+ Confirmación que está en el vps
+
+ ![VPSLink](./img/confrimacionvps.png)
 
 
 
