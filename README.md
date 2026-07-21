@@ -30,31 +30,14 @@
 
 **Dulce Luna API** es una API REST desarrollada con Java y Spring Boot para administrar productos de una pastelería.
 
-La aplicación implementa autenticación real mediante **Spring Security y JSON Web Tokens (JWT)**. Los usuarios pueden registrarse e iniciar sesión para obtener un token, el cual debe enviarse en las peticiones protegidas mediante el encabezado `Authorization: Bearer`.
+La aplicación implementa autenticación real mediante **Spring Security y JSON Web Tokens (JWT)**, los usuarios pueden registrarse e iniciar sesión para obtener un token, el cual debe enviarse en las peticiones protegidas mediante el encabezado `Authorization: Bearer`.
 
-La API utiliza una base de datos MySQL y una arquitectura organizada en entidades, DTOs, repositorios, servicios y controladores. Todas las respuestas son enviadas en formato JSON y no se utilizan vistas Thymeleaf.
+La API utiliza una base de datos MySQL y una arquitectura organizada en entidades, DTOs, repositorios, servicios y controladores, todas las respuestas son enviadas en formato JSON y no se utilizan vistas Thymeleaf.
 
 Las peticiones fueron probadas y documentadas mediante **Bruno**, cuya colección se encuentra incluida en el repositorio.
 
 ---
 
-## Objetivos implementados
-
-- Construcción de una API puramente REST.
-- Autenticación real con Spring Security y JWT.
-- Registro e inicio de sesión de usuarios.
-- Protección de endpoints mediante tokens Bearer.
-- CRUD completo de productos.
-- Paginación en el listado de productos.
-- Uso de DTOs para controlar los datos de entrada y salida.
-- Validación mediante Bean Validation y `@Valid`.
-- Manejo global de errores en formato JSON.
-- Persistencia de información con Spring Data JPA y MySQL.
-- Relación entre productos y categorías.
-- Pruebas de todos los endpoints mediante Bruno.
-- Despliegue de la API en un VPS.
-
----
 
 ## Tecnologías utilizadas
 
@@ -73,46 +56,6 @@ Las peticiones fueron probadas y documentadas mediante **Bruno**, cuya colecció
 - Git y GitHub
 - VPS con Ubuntu
 
----
-
-## Arquitectura del proyecto
-
-El proyecto utiliza una arquitectura organizada por capas:
-
-```text
-src/main/java/com/dulceluna/api
-├── config
-│   └── SecurityConfig.java
-├── controller
-│   ├── AuthController.java
-│   ├── CategoriaController.java
-│   └── ProductoController.java
-├── dto
-│   ├── auth
-│   ├── categoria
-│   └── producto
-├── entity
-│   ├── Categoria.java
-│   ├── Producto.java
-│   ├── Rol.java
-│   └── Usuario.java
-├── exception
-│   ├── ApiError.java
-│   ├── GlobalExceptionHandler.java
-│   └── ResourceNotFoundException.java
-├── repository
-│   ├── CategoriaRepository.java
-│   ├── ProductoRepository.java
-│   └── UsuarioRepository.java
-├── security
-│   ├── CustomUserDetailsService.java
-│   ├── JwtAuthenticationEntryPoint.java
-│   └── JwtService.java
-└── service
-    ├── AuthService.java
-    ├── CategoriaService.java
-    └── ProductoService.java
-```
 
 ---
 
@@ -441,6 +384,100 @@ Direcciones utilizadas:
 Local: http://localhost:8088
 VPS:   http://54.83.75.25:8088
 ```
+
+## Links de los endpoints desplegados en el VPS
+
+La API se encuentra desplegada y funcionando en la siguiente dirección base:
+
+```text
+http://54.83.75.25:8088
+```
+
+Las pruebas mostradas en las capturas de este README fueron realizadas desde Bruno utilizando el entorno `VPS`.
+
+### Autenticación
+
+| Método | Endpoint completo | Descripción | Token |
+|---|---|---|---|
+| POST | `http://54.83.75.25:8088/api/auth/register` | Registra un usuario y devuelve un JWT | No requerido |
+| POST | `http://54.83.75.25:8088/api/auth/login` | Inicia sesión y devuelve un JWT | No requerido |
+
+### Categorías
+
+| Método | Endpoint completo | Descripción | Token |
+|---|---|---|---|
+| GET | `http://54.83.75.25:8088/api/categorias` | Lista las categorías | Requerido |
+| POST | `http://54.83.75.25:8088/api/categorias` | Crea una categoría | Requerido |
+
+### Productos
+
+| Método | Endpoint completo | Descripción | Token |
+|---|---|---|---|
+| GET | `http://54.83.75.25:8088/api/productos?page=0&size=5&sort=id,asc` | Lista los productos con paginación | Requerido |
+| GET | `http://54.83.75.25:8088/api/productos/{id}` | Obtiene un producto por ID | Requerido |
+| POST | `http://54.83.75.25:8088/api/productos` | Crea un producto | Requerido |
+| PUT | `http://54.83.75.25:8088/api/productos/{id}` | Actualiza un producto | Requerido |
+| DELETE | `http://54.83.75.25:8088/api/productos/{id}` | Elimina un producto | Requerido |
+
+Ejemplo de consulta utilizando un ID existente:
+
+```text
+http://54.83.75.25:8088/api/productos/2
+```
+
+> Los endpoints protegidos no pueden probarse correctamente pegando únicamente el enlace en el navegador, debido a que requieren enviar un token JWT en el encabezado de la petición. Por esta razón fueron probados mediante Bruno.
+
+---
+
+## Uso del token JWT
+
+No existe un token permanente. La API genera un token JWT al registrar un usuario o iniciar sesión.
+
+El token se obtiene mediante:
+
+```http
+POST http://54.83.75.25:8088/api/auth/register
+```
+
+o:
+
+```http
+POST http://54.83.75.25:8088/api/auth/login
+```
+
+La respuesta contiene un campo llamado `token`:
+
+```json
+{
+  "token": "TOKEN_JWT_GENERADO_POR_LA_API",
+  "tipo": "Bearer",
+  "expiraEn": 3600
+}
+```
+
+Para acceder a los endpoints protegidos, el token debe enviarse mediante el encabezado:
+
+```http
+Authorization: Bearer TOKEN_JWT_GENERADO_POR_LA_API
+```
+
+En Bruno, la petición de login guarda automáticamente el token con el siguiente script:
+
+```javascript
+bru.setVar("token", res.body.token);
+```
+
+Después, las peticiones protegidas utilizan:
+
+```text
+{{token}}
+```
+
+como `Bearer Token`.
+
+El token tiene una duración de 3600 segundos, equivalentes a una hora. Cuando expira, se debe ejecutar nuevamente el login para generar uno nuevo.
+
+Por seguridad, no se incluye un token JWT completo en este README, ya que funciona como una credencial temporal.
 
 ---
 
