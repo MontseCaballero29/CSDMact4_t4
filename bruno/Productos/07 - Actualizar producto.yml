@@ -1,0 +1,27 @@
+info:
+  name: 07 - Actualizar producto
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/api/productos/1"
+  body:
+    type: json
+    data: |-
+      {
+        "nombre": "Pastel de chocolate premium",
+        "descripcion": "Pastel premium de chocolate con decoración de luna",
+        "precio": 550.00,
+        "stock": 15,
+        "categoriaId": 1
+      }
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

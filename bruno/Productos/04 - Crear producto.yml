@@ -1,0 +1,27 @@
+info:
+  name: 04 - Crear producto
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/productos"
+  body:
+    type: json
+    data: |-
+      {
+        "nombre": "Pastel de chocolate",
+        "descripcion": "Pastel de chocolate con decoración de luna",
+        "precio": 450.00,
+        "stock": 10,
+        "categoriaId": 1
+      }
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
