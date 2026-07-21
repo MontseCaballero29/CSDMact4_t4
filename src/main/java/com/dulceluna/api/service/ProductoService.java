@@ -27,9 +27,7 @@ public class ProductoService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    /*
-     * Lista los productos utilizando paginación.
-     */
+    /*Lista los productos utilizando paginación.*/
     @Transactional(readOnly = true)
     public Page<ProductoResponse> listar(Pageable pageable) {
 
@@ -38,9 +36,7 @@ public class ProductoService {
                 .map(this::convertirAResponse);
     }
 
-    /*
-     * Busca un producto por su identificador.
-     */
+    /*Busca un producto por su identificador.*/
     @Transactional(readOnly = true)
     public ProductoResponse obtenerPorId(Long id) {
 
@@ -49,9 +45,7 @@ public class ProductoService {
         return convertirAResponse(producto);
     }
 
-    /*
-     * Crea un producto nuevo.
-     */
+    /*Crea un producto nuevo.*/
     @Transactional
     public ProductoResponse crear(ProductoRequest request) {
 
@@ -70,9 +64,7 @@ public class ProductoService {
         return convertirAResponse(productoGuardado);
     }
 
-    /*
-     * Actualiza completamente un producto existente.
-     */
+    /*Actualiza completamente un producto existente.*/
     @Transactional
     public ProductoResponse actualizar(Long id, ProductoRequest request) {
 
@@ -90,9 +82,7 @@ public class ProductoService {
         return convertirAResponse(productoActualizado);
     }
 
-    /*
-     * Elimina un producto existente.
-     */
+    /* Elimina un producto existente. */
     @Transactional
     public void eliminar(Long id) {
 
@@ -101,9 +91,7 @@ public class ProductoService {
         productoRepository.delete(producto);
     }
 
-    /*
-     * Busca un producto o genera un error 404.
-     */
+    /* Busca un producto o genera un error 404. */
     private Producto buscarProducto(Long id) {
 
         return productoRepository
@@ -112,9 +100,7 @@ public class ProductoService {
                         "No existe un producto con el id " + id));
     }
 
-    /*
-     * Busca una categoría o genera un error 404.
-     */
+    /*Busca una categoría o genera un error 404.*/
     private Categoria buscarCategoria(Long categoriaId) {
 
         return categoriaRepository
@@ -123,9 +109,7 @@ public class ProductoService {
                         "No existe una categoría con el id " + categoriaId));
     }
 
-    /*
-     * Convierte una Entity Producto en un ProductoResponse.
-     */
+    /* Convierte una Entity Producto en un ProductoResponse. */
     private ProductoResponse convertirAResponse(Producto producto) {
 
         return new ProductoResponse(
