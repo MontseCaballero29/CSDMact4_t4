@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/api/productos/1"
+  url: "{{baseUrl}}/api/productos/{{productoId}}"
   auth:
     type: bearer
     token: "{{token}}"

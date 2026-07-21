@@ -16,6 +16,12 @@ http:
     type: bearer
     token: "{{token}}"
 
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("categoriaId", res.body.id);
+
 settings:
   encodeUrl: true
   timeout: 0

@@ -14,11 +14,17 @@ http:
         "descripcion": "Pastel de chocolate con decoración de luna",
         "precio": 450.00,
         "stock": 10,
-        "categoriaId": 1
+        "categoriaId": {{categoriaId}}
       }
   auth:
     type: bearer
     token: "{{token}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setVar("productoId", res.body.id);
 
 settings:
   encodeUrl: true

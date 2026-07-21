@@ -5,7 +5,7 @@ info:
 
 http:
   method: PUT
-  url: "{{baseUrl}}/api/productos/1"
+  url: "{{baseUrl}}/api/productos/{{productoId}}"
   body:
     type: json
     data: |-
@@ -14,7 +14,7 @@ http:
         "descripcion": "Pastel premium de chocolate con decoración de luna",
         "precio": 550.00,
         "stock": 15,
-        "categoriaId": 1
+        "categoriaId": {{categoriaId}}
       }
   auth:
     type: bearer
