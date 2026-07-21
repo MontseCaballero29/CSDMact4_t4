@@ -508,17 +508,10 @@ Operación `PUT` para modificar un producto existente.
 
 ![Actualizar producto](./img/08-actualizar-producto.png)
 
----
-
-## 9. Eliminación de producto
-
-Operación `DELETE` para eliminar un producto. La API responde con `204 No Content`.
-
-![Eliminar producto](./img/09-eliminar-producto.png)
 
 ---
 
-## 10. Validación de datos
+## 9. Validación de datos
 
 Prueba de datos inválidos, rechazada por las validaciones de los DTOs.
 
