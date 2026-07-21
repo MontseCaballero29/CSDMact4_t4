@@ -3,6 +3,7 @@ package com.dulceluna.api.exception;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import org.springframework.security.core.AuthenticationException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -110,6 +111,23 @@ public class GlobalExceptionHandler {
                 .body(error);
     }
 
+     /* Error 401: correo o contraseña incorrectos. */
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiError> manejarAutenticacion(
+            AuthenticationException ex,
+            HttpServletRequest request) {
+
+        ApiError error = crearError(
+                HttpStatus.UNAUTHORIZED,
+                "Correo o contraseña incorrectos",
+                request.getRequestURI(),
+                null);
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(error);
+    }
+    
     /*Error 500: cualquier error inesperado.*/
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> manejarErrorGeneral(
