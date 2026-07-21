@@ -1,0 +1,4 @@
+name: VPS
+variables:
+  - name: baseUrl
+    value: http://54.83.75.25:8088
