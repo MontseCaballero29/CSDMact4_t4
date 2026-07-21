@@ -483,7 +483,6 @@ Por seguridad, no se incluye un token JWT completo en este README, ya que funcio
 
 # Evidencias de funcionamiento
 
-![Uploading image.png…]()
 
 
 ## 1. Registro de usuario
