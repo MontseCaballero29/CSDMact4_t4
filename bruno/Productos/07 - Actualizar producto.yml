@@ -10,11 +10,11 @@ http:
     type: json
     data: |-
       {
-        "nombre": "Pastel de chocolate premium",
+        "nombre": "Pastel de chocolate blanco",
         "descripcion": "Pastel premium de chocolate con decoración de luna",
         "precio": 550.00,
-        "stock": 15,
-        "categoriaId": {{categoriaId}}
+        "stock": 10,
+        "categoriaId": 1
       }
   auth:
     type: bearer

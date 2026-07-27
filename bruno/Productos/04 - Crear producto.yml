@@ -10,11 +10,11 @@ http:
     type: json
     data: |-
       {
-        "nombre": "Pastel de chocolate",
-        "descripcion": "Pastel de chocolate con decoración de luna",
+        "nombre": "Galleta de chocolate",
+        "descripcion": "Galleta de chocolate con decoración de chispas",
         "precio": 450.00,
-        "stock": 10,
-        "categoriaId": {{categoriaId}}
+        "stock": 15,
+        "categoriaId": 1
       }
   auth:
     type: bearer
@@ -23,8 +23,7 @@ http:
 runtime:
   scripts:
     - type: after-response
-      code: |-
-        bru.setVar("productoId", res.body.id);
+      code: bru.setVar("productoId", res.body.id);
 
 settings:
   encodeUrl: true

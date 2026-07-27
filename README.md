@@ -115,8 +115,8 @@ Categoria 1 ───────── N Producto
 Los endpoints de registro y login son públicos:
 
 ```text
-POST /api/auth/register
-POST /api/auth/login
+POST http://54.83.75.25:8088/api/auth/register
+POST http://54.83.75.25:8088/api/auth/login
 ```
 
 Los endpoints de productos y categorías requieren autenticación:
